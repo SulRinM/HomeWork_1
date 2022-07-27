@@ -58,11 +58,22 @@ int main()
         
         std::ofstream fout ("data.txt");
         fout << lArr2 << std::endl;
-        for (int i = 0; i < lArr2; ++i) {
+        fout << int_ptr2[lArr2 - 1] << " ";
+        for (int i = 0; i < lArr2-1; ++i) {
             fout << int_ptr2[i] << " ";
         }
+        fout << std::endl;
+
+        fout << lArr1 << std::endl;
+        for (int k = 1; k < lArr1; ++k) {
+            fout << int_ptr[k] << " ";
+        }
+        fout << int_ptr[0];
 
         fout.close();
+
+        delete[] int_ptr;
+        delete[] int_ptr2;
 
     }
     else {
