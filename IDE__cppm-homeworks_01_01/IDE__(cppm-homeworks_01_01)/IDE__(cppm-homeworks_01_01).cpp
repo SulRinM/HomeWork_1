@@ -20,13 +20,14 @@
 #include <iostream>
 #include <fstream>
 
-void ifProblem(int val) {
+bool ifProblem(int val) {
     if (val == 0 || val < 0)
     {
         std::cout << "Размер массива не может быть 0 или отрицательным значением!" << std::endl;
         std::cout << "Закройте программу и повторите попытку устранив ошибки" << std::endl;
-        while (true);
+        return true;
     }
+    else return false;
 }
 
 int main()
@@ -38,43 +39,47 @@ int main()
     if (fin.is_open())
     {
         fin >> data;
-        ifProblem(data);
-        int lArr1 = data;
-        int* int_ptr = new int[data];
-        for (int i = 0; i < data; ++i) {
-            int tmp;
-            fin >> tmp;
-            int_ptr[i] = tmp;
-        }
-        fin >> data;
-        ifProblem(data);
-        int lArr2 = data;
-        int* int_ptr2 = new int[data];
-        for (int k = 0; k < data; ++k) {
-            int temp;
-            fin >> temp;
-            int_ptr2[k] = temp;
-        }
-        
-        std::ofstream fout ("data.txt");
-        fout << lArr2 << std::endl;
-        fout << int_ptr2[lArr2 - 1] << " ";
-        for (int i = 0; i < lArr2-1; ++i) {
-            fout << int_ptr2[i] << " ";
-        }
-        fout << std::endl;
+        if (!ifProblem(data))
+        {
+            int lArr1 = data;
+            int* int_ptr = new int[data];
+            for (int i = 0; i < data; ++i) {
+                int tmp;
+                fin >> tmp;
+                int_ptr[i] = tmp;
+            }
+            fin >> data;
+            if (!ifProblem(data))
+            {
+                int lArr2 = data;
+                int* int_ptr2 = new int[data];
+                for (int k = 0; k < data; ++k) {
+                    int temp;
+                    fin >> temp;
+                    int_ptr2[k] = temp;
+                }
 
-        fout << lArr1 << std::endl;
-        for (int k = 1; k < lArr1; ++k) {
-            fout << int_ptr[k] << " ";
+                std::ofstream fout("data.txt");
+                fout << lArr2 << std::endl;
+                fout << int_ptr2[lArr2 - 1] << " ";
+                for (int i = 0; i < lArr2 - 1; ++i) {
+                    fout << int_ptr2[i] << " ";
+                }
+                fout << std::endl;
+
+                fout << lArr1 << std::endl;
+                for (int k = 1; k < lArr1; ++k) {
+                    fout << int_ptr[k] << " ";
+                }
+                fout << int_ptr[0];
+
+                fout.close();
+
+                delete[] int_ptr;
+                delete[] int_ptr2;
+
+            }
         }
-        fout << int_ptr[0];
-
-        fout.close();
-
-        delete[] int_ptr;
-        delete[] int_ptr2;
-
     }
     else {
         std::cout << "Не получилось открыть файл" << std::endl;
